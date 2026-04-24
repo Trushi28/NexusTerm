@@ -15,6 +15,6 @@ public record FileInfo(
     @Override
     public String toString() {
         String type = isDirectory ? "d" : "-";
-        return String.format("%s %10d %s %s", permissions, size, lastModified, name);
+        return String.format("%s%s %10d %s %s", type, permissions, size, lastModified, name);
     }
 }

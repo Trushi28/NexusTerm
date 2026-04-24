@@ -46,5 +46,26 @@ mvn clean compile
 mvn exec:java -Dexec.mainClass="io.nexusterm.ssh.NexusSshServer"
 ```
 
+You can override the demo login and port without editing code:
+
+```bash
+mvn exec:java \
+  -Dexec.mainClass="io.nexusterm.ssh.NexusSshServer" \
+  -Dnexus.term.user=admin \
+  -Dnexus.term.password=password \
+  -Dnexus.term.port=2222
+```
+
+Then connect with:
+
+```bash
+ssh -p 2222 admin@localhost
+```
+
+Notes:
+* The shell now falls back to a stream-safe dumb terminal when native JLine providers are unavailable, so SSH login should no longer disconnect immediately after successful authentication.
+* NexusTerm intentionally advertises password authentication only, which avoids the noisy public-key fallback warnings from clients offering Ed25519 keys.
+* If OpenSSH prints a post-quantum key-exchange warning, that is about the negotiated SSH KEX algorithm, not the password login path or shell startup.
+
 ## Security Note
 This project is a demonstration of advanced Java concepts. The provided password authentication and agent attachment capabilities are intended for educational and local diagnostic purposes.

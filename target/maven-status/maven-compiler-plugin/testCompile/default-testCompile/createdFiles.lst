@@ -1,0 +1,4 @@
+io/nexusterm/shell/ShellParserTest.class
+io/nexusterm/shell/PipelineExecutorTest.class
+io/nexusterm/shell/NexusShellTerminalTest.class
+io/nexusterm/ssh/NexusServerConfigTest.class

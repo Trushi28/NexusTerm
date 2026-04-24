@@ -2,8 +2,8 @@ package io.nexusterm.shell.commands;
 
 import io.nexusterm.shell.CommandContext;
 import io.nexusterm.shell.NexusCommand;
+import io.nexusterm.shell.ShellValueSupport;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,12 +27,7 @@ public class WhereCommand implements NexusCommand {
         List<Object> result = new ArrayList<>();
         for (Object obj : input) {
             try {
-                Field field = findField(obj.getClass(), fieldName);
-                if (field == null) continue;
-                
-                field.setAccessible(true);
-                Object val = field.get(obj);
-                
+                Object val = ShellValueSupport.readProperty(obj, fieldName);
                 if (match(val, operator, targetValue)) {
                     result.add(obj);
                 }
@@ -43,38 +38,23 @@ public class WhereCommand implements NexusCommand {
         return result;
     }
 
-    private Field findField(Class<?> clazz, String name) {
-        while (clazz != null) {
-            try {
-                return clazz.getDeclaredField(name);
-            } catch (NoSuchFieldException e) {
-                clazz = clazz.getSuperclass();
-            }
-        }
-        return null;
-    }
-
     private boolean match(Object val, String operator, String target) {
         if (val == null) return false;
-        
         String valStr = val.toString();
-        
+
         return switch (operator) {
             case "=" -> valStr.equalsIgnoreCase(target);
             case "!=" -> !valStr.equalsIgnoreCase(target);
             case ">" -> compare(val, target) > 0;
+            case ">=" -> compare(val, target) >= 0;
             case "<" -> compare(val, target) < 0;
+            case "<=" -> compare(val, target) <= 0;
             case "contains" -> valStr.toLowerCase().contains(target.toLowerCase());
             default -> false;
         };
     }
 
     private int compare(Object val, String target) {
-        if (val instanceof Number n) {
-            double v1 = n.doubleValue();
-            double v2 = Double.parseDouble(target);
-            return Double.compare(v1, v2);
-        }
-        return val.toString().compareTo(target);
+        return ShellValueSupport.compare(val, ShellValueSupport.parseLiteral(target));
     }
 }

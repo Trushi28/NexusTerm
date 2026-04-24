@@ -1,0 +1,3 @@
+# Created at 2026-04-24T11:35:37.804
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '[0.003s][warning][perf,memops] Cannot use file /tmp/hsperfdata_Trushi/88 because it is locked by another process (errno = 11)'.
+

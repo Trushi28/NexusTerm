@@ -25,7 +25,7 @@ public class RewindCommand implements NexusCommand {
 
             if (targetIndex < 0) targetIndex = 0;
 
-            context.out().println("Rewinding " + targetIndex + " steps to state [" + targetIndex + "]...");
+            context.out().println("Rewinding " + steps + " step(s) to state [" + targetIndex + "]...");
             shell.restoreState(targetIndex, context);
             context.out().println("State restored. Variables and CWD reverted.");
             

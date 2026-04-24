@@ -1,5 +1,7 @@
 package io.nexusterm.shell;
 
+import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -15,12 +17,6 @@ public class JobManager {
         int id = nextId.getAndIncrement();
         Job job = new Job(id, command, future);
         jobs.put(id, job);
-        
-        future.handle((res, ex) -> {
-            // Clean up or notify on completion
-            return null;
-        });
-        
         return job;
     }
 
@@ -29,6 +25,18 @@ public class JobManager {
     }
     
     public Map<Integer, Job> listJobs() {
-        return jobs;
+        return jobs.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey(Comparator.naturalOrder()))
+                .collect(LinkedHashMap::new, (acc, entry) -> acc.put(entry.getKey(), entry.getValue()), LinkedHashMap::putAll);
+    }
+
+    public int runningCount() {
+        int running = 0;
+        for (Job job : jobs.values()) {
+            if (!job.future().isDone()) {
+                running++;
+            }
+        }
+        return running;
     }
 }

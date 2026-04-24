@@ -13,11 +13,13 @@
         <maven.compiler.target>25</maven.compiler.target>
         <maven.compiler.release>25</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <sshd.version>2.11.0</sshd.version>
+        <sshd.version>2.17.1</sshd.version>
         <jline.version>3.24.1</jline.version>
         <jackson.version>2.15.2</jackson.version>
         <slf4j.version>2.0.9</slf4j.version>
         <logback.version>1.4.11</logback.version>
+        <junit.version>5.10.0</junit.version>
+        <bcprov.version>1.84</bcprov.version>
     </properties>
 
     <dependencies>
@@ -32,6 +34,11 @@
             <groupId>org.apache.sshd</groupId>
             <artifactId>sshd-scp</artifactId>
             <version>${sshd.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk18on</artifactId>
+            <version>${bcprov.version}</version>
         </dependency>
 
         <!-- JLine for PTY and Shell Interaction -->
@@ -74,7 +81,13 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.10.0</version>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -97,6 +110,11 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.1.2</version>
             </plugin>
         </plugins>
     </build>

@@ -2,6 +2,7 @@ package io.nexusterm.shell;
 
 import org.jline.terminal.Terminal;
 import java.io.PrintStream;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -21,6 +22,7 @@ public class CommandContext {
         this.out = new PrintStream(terminal.output(), true);
         this.jobManager = jobManager;
         this.sessionManager = sessionManager;
+        this.cwd = Paths.get(System.getProperty("user.dir")).toAbsolutePath().normalize().toString();
     }
 
     public Terminal getTerminal() { return terminal; }

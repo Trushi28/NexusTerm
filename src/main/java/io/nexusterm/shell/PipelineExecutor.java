@@ -1,7 +1,6 @@
 package io.nexusterm.shell;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -20,18 +19,23 @@ public class PipelineExecutor {
 
     public CompletableFuture<List<?>> execute(String line) {
         return CompletableFuture.supplyAsync(() -> {
-            String[] parts = line.split("\\|");
+            List<String> parts = ShellParser.splitPipeline(line);
             List<?> currentData = null;
 
             for (String part : parts) {
                 String trimmed = part.trim();
                 if (trimmed.isEmpty()) continue;
 
-                String[] cmdParts = trimmed.split("\\s+");
-                String cmdName = cmdParts[0];
-                List<String> args = cmdParts.length > 1 
-                    ? Arrays.asList(Arrays.copyOfRange(cmdParts, 1, cmdParts.length))
-                    : new ArrayList<>();
+                List<String> tokens = ShellParser.tokenize(trimmed);
+                if (tokens.isEmpty()) {
+                    continue;
+                }
+
+                String cmdName = tokens.get(0);
+                List<String> args = new ArrayList<>();
+                for (int i = 1; i < tokens.size(); i++) {
+                    args.add(ShellParser.interpolate(tokens.get(i), context.getVariables()));
+                }
 
                 var cmdOpt = registry.getCommand(cmdName);
                 if (cmdOpt.isPresent()) {
