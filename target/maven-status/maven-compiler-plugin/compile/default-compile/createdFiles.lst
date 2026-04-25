@@ -3,12 +3,16 @@ io/nexusterm/shell/commands/HelpCommand.class
 io/nexusterm/shell/commands/LsCommand.class
 io/nexusterm/shell/commands/ClearCommand.class
 io/nexusterm/agent/SpyAgent$MethodSpyTransformer$1.class
+io/nexusterm/shell/commands/SpyCommand$SpySession.class
 io/nexusterm/ssh/NexusServerConfig.class
 io/nexusterm/shell/commands/JobsCommand.class
 io/nexusterm/shell/NexusShell.class
+io/nexusterm/shell/commands/SpyAgentJarBuilder.class
 io/nexusterm/shell/CommandContext.class
 io/nexusterm/shell/ShellParser.class
 io/nexusterm/shell/SessionState.class
+io/nexusterm/shell/commands/SortByCommand.class
+io/nexusterm/agent/SpyAgent$SpySink.class
 io/nexusterm/shell/CommandRegistry.class
 io/nexusterm/shell/PipelineExecutor.class
 io/nexusterm/shell/commands/RewindCommand.class
@@ -28,6 +32,7 @@ io/nexusterm/shell/SessionManager.class
 io/nexusterm/shell/commands/SelectCommand.class
 io/nexusterm/agent/SpyAgent$MethodSpyTransformer$1$1.class
 io/nexusterm/shell/JobManager.class
+io/nexusterm/agent/SpyAgent$AgentConfig.class
 io/nexusterm/shell/commands/WhereCommand.class
 io/nexusterm/ssh/NexusSshServer.class
 io/nexusterm/agent/SpyAgent.class

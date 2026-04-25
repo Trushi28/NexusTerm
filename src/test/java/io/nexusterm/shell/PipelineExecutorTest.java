@@ -9,11 +9,13 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PipelineExecutorTest {
 
@@ -42,6 +44,28 @@ class PipelineExecutorTest {
         assertEquals(1, output.size());
         Map<?, ?> row = assertInstanceOf(Map.class, output.get(0));
         assertEquals("large.txt", row.get("name"));
+    }
+
+    @Test
+    void storesTypedVariablesAndSortsPipelineData(@TempDir Path tempDir) throws Exception {
+        Files.writeString(tempDir.resolve("old.txt"), "x".repeat(32));
+        Files.writeString(tempDir.resolve("new.txt"), "x".repeat(4096));
+        Files.setLastModifiedTime(tempDir.resolve("old.txt"), java.nio.file.attribute.FileTime.from(Instant.parse("2026-01-01T00:00:00Z")));
+        Files.setLastModifiedTime(tempDir.resolve("new.txt"), java.nio.file.attribute.FileTime.from(Instant.parse("2026-02-01T00:00:00Z")));
+
+        CommandContext context = newContext();
+        context.setCwd(tempDir.toString());
+        PipelineExecutor executor = new PipelineExecutor(new CommandRegistry(), context);
+
+        executor.execute("set minSize 1kb").get();
+        Object minSize = context.getVariables().get("minSize");
+        assertTrue(minSize instanceof Long);
+
+        List<?> output = executor.execute("ls | where size >= $minSize | sortby lastModified desc | select name size").get();
+
+        assertEquals(1, output.size());
+        Map<?, ?> row = assertInstanceOf(Map.class, output.get(0));
+        assertEquals("new.txt", row.get("name"));
     }
 
     private CommandContext newContext() throws Exception {

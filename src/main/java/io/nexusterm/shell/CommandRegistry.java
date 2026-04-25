@@ -25,6 +25,7 @@ public class CommandRegistry {
         register("await", new AwaitCommand());
         register("pwd", new PwdCommand());
         register("set", new SetCommand());
+        register("sortby", new SortByCommand());
         register("spy", new SpyCommand());
         register("collab", new CollabCommand());
         register("rewind", new RewindCommand());

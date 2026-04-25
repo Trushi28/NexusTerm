@@ -2,6 +2,7 @@ package io.nexusterm.shell.commands;
 
 import io.nexusterm.shell.CommandContext;
 import io.nexusterm.shell.NexusCommand;
+import io.nexusterm.shell.ShellValueSupport;
 
 import java.util.List;
 
@@ -14,7 +15,8 @@ public class SetCommand implements NexusCommand {
         }
 
         String name = args.get(0);
-        String value = String.join(" ", args.subList(1, args.size()));
+        String rawValue = String.join(" ", args.subList(1, args.size()));
+        Object value = ShellValueSupport.parseLiteral(rawValue);
         context.getVariables().put(name, value);
         return List.of(name + "=" + value);
     }

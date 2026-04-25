@@ -12,6 +12,10 @@ public record FileInfo(
     Instant lastModified,
     String permissions
 ) {
+    public Instant modified() {
+        return lastModified;
+    }
+
     @Override
     public String toString() {
         String type = isDirectory ? "d" : "-";

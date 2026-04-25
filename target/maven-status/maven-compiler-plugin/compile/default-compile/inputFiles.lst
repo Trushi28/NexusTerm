@@ -4,6 +4,7 @@
 /home/Trushi/proj/java/nexus-term/src/main/java/io/nexusterm/shell/commands/EchoCommand.java
 /home/Trushi/proj/java/nexus-term/src/main/java/io/nexusterm/shell/ShellValueSupport.java
 /home/Trushi/proj/java/nexus-term/src/main/java/io/nexusterm/shell/Job.java
+/home/Trushi/proj/java/nexus-term/src/main/java/io/nexusterm/shell/commands/SpyAgentJarBuilder.java
 /home/Trushi/proj/java/nexus-term/src/main/java/io/nexusterm/shell/SessionManager.java
 /home/Trushi/proj/java/nexus-term/src/main/java/io/nexusterm/shell/CommandContext.java
 /home/Trushi/proj/java/nexus-term/src/main/java/io/nexusterm/shell/commands/PwdCommand.java
@@ -18,6 +19,7 @@
 /home/Trushi/proj/java/nexus-term/src/main/java/io/nexusterm/shell/commands/HelpCommand.java
 /home/Trushi/proj/java/nexus-term/src/main/java/io/nexusterm/shell/commands/SelectCommand.java
 /home/Trushi/proj/java/nexus-term/src/main/java/io/nexusterm/shell/PipelineExecutor.java
+/home/Trushi/proj/java/nexus-term/src/main/java/io/nexusterm/shell/commands/SortByCommand.java
 /home/Trushi/proj/java/nexus-term/src/main/java/io/nexusterm/shell/commands/CdCommand.java
 /home/Trushi/proj/java/nexus-term/src/main/java/io/nexusterm/ssh/NexusShellFactory.java
 /home/Trushi/proj/java/nexus-term/src/main/java/io/nexusterm/shell/CommandRegistry.java
